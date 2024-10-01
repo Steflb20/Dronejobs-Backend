@@ -15,5 +15,5 @@ public class DronePilot {
 
     private String firstname;
     private String lastname;
-    private String bio;
+    private String aboutMe;
 }

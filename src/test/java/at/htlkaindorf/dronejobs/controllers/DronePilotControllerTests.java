@@ -2,7 +2,7 @@ package at.htlkaindorf.dronejobs.controllers;
 
 import at.htlkaindorf.dronejobs.entities.DronePilot;
 import at.htlkaindorf.dronejobs.services.DronePilotService;
-import org.hamcrest.Matchers;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -10,13 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @SpringBootTest
@@ -42,19 +46,45 @@ public class DronePilotControllerTests {
         DronePilot firstPilot = new DronePilot();
         firstPilot.setFirstname("Max");
         firstPilot.setLastname("Mustermann");
-        firstPilot.setBio("I love drones :)");
+        firstPilot.setAboutMe("I love drones :)");
 
         mockDronePilots.add(firstPilot);
 
         Mockito.when(dronePilotService.getAllDronePilots()).thenReturn(mockDronePilots);
 
         this.mockMvc.perform(MockMvcRequestBuilders.get("/api/dronepilot/all"))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andDo(MockMvcResultHandlers.print())
-                .andExpect(
-                        MockMvcResultMatchers.content().string(
-                                Matchers.containsString("")
-                        )
-                );
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$", hasSize(1)))
+                .andExpect(jsonPath("$[0].firstname").value("Max"))
+                .andExpect(jsonPath("$[0].lastname").value("Mustermann"))
+                .andExpect(jsonPath("$[0].aboutMe").value("I love drones :)"));
+    }
+
+    @Test
+    @DisplayName("should save the dronepilot using the /save route")
+    public void testSaveRoute() throws Exception {
+        DronePilot pilot = new DronePilot();
+        pilot.setFirstname("Max");
+        pilot.setLastname("Mustermann");
+        pilot.setAboutMe("Heyy ;)");
+
+        String json = new ObjectMapper().writeValueAsString(pilot);
+
+        pilot.setId(1);
+
+        Mockito.when(this.dronePilotService.saveDronePilot(Mockito.any(DronePilot.class))).thenReturn(pilot);
+
+        this.mockMvc.perform(
+                MockMvcRequestBuilders.post("/api/dronepilot/save")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(json)
+                )
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$.firstname").value("Max"))
+                .andExpect(jsonPath("$.lastname").value("Mustermann"))
+                .andExpect(jsonPath("$.id").value(1))
+                .andExpect(jsonPath("$.aboutMe").value("Heyy ;)"));
     }
 }

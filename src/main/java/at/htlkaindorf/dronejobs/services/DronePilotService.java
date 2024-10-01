@@ -23,8 +23,8 @@ public class DronePilotService {
      * Method used to save a pilot to the database
      * @param pilot The pilot
      */
-    public void saveDronePilot(DronePilot pilot) {
-        this.dronePilotRepository.save(pilot);
+    public DronePilot saveDronePilot(DronePilot pilot) {
+        return this.dronePilotRepository.save(pilot);
     }
 
     /**

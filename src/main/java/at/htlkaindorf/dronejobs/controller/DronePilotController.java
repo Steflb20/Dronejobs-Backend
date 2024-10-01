@@ -26,12 +26,9 @@ public class DronePilotController {
     }
 
     @PostMapping("save")
-    public void saveDronePilot(
+    public DronePilot saveDronePilot(
             @RequestBody() DronePilot dronePilot
     ) {
-        this.dronePilotService.saveDronePilot(dronePilot);
+        return this.dronePilotService.saveDronePilot(dronePilot);
     }
-
-
-
 }

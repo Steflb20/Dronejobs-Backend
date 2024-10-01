@@ -33,7 +33,7 @@ public class DronePilotServiceTests {
         DronePilot dronePilot = new DronePilot();
         dronePilot.setFirstname("Max");
         dronePilot.setLastname("Mustermann");
-        dronePilot.setBio("I like drones :)");
+        dronePilot.setAboutMe("I like drones :)");
 
         this.service.saveDronePilot(dronePilot);
 
@@ -48,12 +48,12 @@ public class DronePilotServiceTests {
         DronePilot firstDronePilot = new DronePilot();
         firstDronePilot.setFirstname("Max");
         firstDronePilot.setLastname("Mustermann");
-        firstDronePilot.setBio("I like drones :)");
+        firstDronePilot.setAboutMe("I like drones :)");
 
         DronePilot secondDronePilot = new DronePilot();
         secondDronePilot.setFirstname("Manuela");
         secondDronePilot.setLastname("Musterfrau");
-        secondDronePilot.setBio("I love drones hehe");
+        secondDronePilot.setAboutMe("I love drones hehe");
 
         this.entityManager.persist(firstDronePilot);
         this.entityManager.persist(secondDronePilot);
