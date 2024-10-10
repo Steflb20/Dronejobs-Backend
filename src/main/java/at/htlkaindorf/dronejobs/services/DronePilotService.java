@@ -35,4 +35,12 @@ public class DronePilotService {
         return this.dronePilotRepository.findAll();
     }
 
+    /**
+     * Delete drone pilot by id from the database
+     * @param id Id of dronePilot to delete
+     * @return deleted drone pilot, if successful
+     */
+    public DronePilot deleteDronePilotById(int id) {
+        return this.dronePilotRepository.deleteDronePilotById(id);
+    }
 }
