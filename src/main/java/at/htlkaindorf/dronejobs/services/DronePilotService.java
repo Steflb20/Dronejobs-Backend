@@ -53,4 +53,14 @@ public class DronePilotService {
 
         return toDelete;
     }
+
+    /**
+     * Method to return a DronePilot by id
+     * @param id Id of the drone pilot to find
+     * @return the drone pilot with the given id
+     */
+    public DronePilot findDronePilotById(int id) {
+        return this.dronePilotRepository.getDronePilotById(id);
+    }
+
 }

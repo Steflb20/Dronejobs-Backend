@@ -12,12 +12,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -86,5 +88,35 @@ public class DronePilotControllerTests {
                 .andExpect(jsonPath("$.lastname").value("Mustermann"))
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.aboutMe").value("Heyy ;)"));
+    }
+
+    @Test
+    @DisplayName("should find one dronepilot using the /find route")
+    public void testFindRoute() throws Exception {
+        DronePilot pilot = new DronePilot();
+        pilot.setId(1);
+        pilot.setFirstname("Max");
+        pilot.setLastname("Mustermann");
+        pilot.setAboutMe("I am provecciounal");
+
+        Mockito.when(this.dronePilotService.findDronePilotById(pilot.getId()));
+
+        MvcResult result = this.mockMvc.perform(MockMvcRequestBuilders.get("api/find/" + pilot.getId())
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+
+        String jsonResponse = result.getResponse().getContentAsString();
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        DronePilot returnedPilot = objectMapper.readValue(jsonResponse, DronePilot.class);
+
+        assertEquals(pilot.getId(), returnedPilot.getId());
+        assertEquals(pilot.getFirstname(), returnedPilot.getFirstname());
+        assertEquals(pilot.getLastname(), returnedPilot.getLastname());
+        assertEquals(pilot.getAboutMe(), returnedPilot.getAboutMe());
+
+        Mockito.verify(dronePilotService, Mockito.times(1)).findDronePilotById(pilot.getId());
     }
 }
