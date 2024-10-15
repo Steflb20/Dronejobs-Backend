@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DronePilotService {
@@ -33,6 +34,15 @@ public class DronePilotService {
      */
     public List<DronePilot> getAllDronePilots() {
         return this.dronePilotRepository.findAll();
+    }
+
+    /**
+     * Method to return a DronePilot by id
+     * @param id
+     * @return
+     */
+    public DronePilot findDronePilotById(int id) {
+        return this.dronePilotRepository.findById(id);
     }
 
 }

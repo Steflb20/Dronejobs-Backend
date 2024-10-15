@@ -31,4 +31,9 @@ public class DronePilotController {
     ) {
         return this.dronePilotService.saveDronePilot(dronePilot);
     }
+
+    @GetMapping("findById/{id}")
+    public DronePilot findDronePilotById(@PathVariable int id) {
+        return this.dronePilotService.findDronePilotById(id);
+    }
 }
