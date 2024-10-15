@@ -2,7 +2,10 @@ package at.htlkaindorf.dronejobs.services;
 
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isA;
+import static org.mockito.Mockito.anyInt;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -71,5 +74,28 @@ class DronePilotServiceDiffblueTest {
         // Assert
         verify(dronePilotRepository).findAll();
         assertNull(actualAllDronePilots);
+    }
+
+    /**
+     * Method under test: {@link DronePilotService#deleteDronePilotById(int)}
+     */
+    @Test
+    void testDeleteDronePilotById() {
+        // Arrange
+        DronePilot dronePilot = new DronePilot();
+        dronePilot.setAboutMe("About Me");
+        dronePilot.setFirstname("Jane");
+        dronePilot.setId(1);
+        dronePilot.setLastname("Doe");
+        when(dronePilotRepository.getDronePilotById(anyInt())).thenReturn(dronePilot);
+        doNothing().when(dronePilotRepository).delete(Mockito.<DronePilot>any());
+
+        // Act
+        DronePilot actualDeleteDronePilotByIdResult = dronePilotService.deleteDronePilotById(1);
+
+        // Assert
+        verify(dronePilotRepository).getDronePilotById(eq(1));
+        verify(dronePilotRepository).delete(isA(DronePilot.class));
+        assertSame(dronePilot, actualDeleteDronePilotByIdResult);
     }
 }
