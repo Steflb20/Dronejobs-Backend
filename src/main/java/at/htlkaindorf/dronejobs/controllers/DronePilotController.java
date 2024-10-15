@@ -36,4 +36,9 @@ public class DronePilotController {
     public DronePilot findDronePilotById(@PathVariable int id) {
         return this.dronePilotService.findDronePilotById(id);
     }
+
+    @DeleteMapping("deleteById/{id}")
+    public DronePilot deleteDronePilotById(@PathVariable int id) {
+        return this.dronePilotService.deleteDronePilotById(id);
+    }
 }

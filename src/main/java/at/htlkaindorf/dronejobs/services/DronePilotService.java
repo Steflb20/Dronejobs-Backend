@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -48,10 +47,11 @@ public class DronePilotService {
         this.dronePilotRepository.delete(toDelete);
         return toDelete;
     }
+
     /**
      * Method to return a DronePilot by id
-     * @param id
-     * @return
+     * @param id Id of the drone pilot to find
+     * @return the drone pilot with the given id
      */
     public DronePilot findDronePilotById(int id) {
         return this.dronePilotRepository.getDronePilotById(id);
