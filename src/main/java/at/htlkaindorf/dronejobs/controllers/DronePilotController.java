@@ -1,4 +1,4 @@
-package at.htlkaindorf.dronejobs.controller;
+package at.htlkaindorf.dronejobs.controllers;
 
 import at.htlkaindorf.dronejobs.entities.DronePilot;
 import at.htlkaindorf.dronejobs.services.DronePilotService;

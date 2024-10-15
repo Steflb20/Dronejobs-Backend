@@ -3,6 +3,7 @@ package at.htlkaindorf.dronejobs.services;
 import at.htlkaindorf.dronejobs.entities.DronePilot;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+@Slf4j
 @SpringBootTest
 @Transactional
 public class DronePilotServiceTests {
@@ -37,7 +39,7 @@ public class DronePilotServiceTests {
 
         this.service.saveDronePilot(dronePilot);
 
-        List<DronePilot> list = this.entityManager.createQuery("SELECT p FROM DronePilot p").getResultList();
+        List<DronePilot> list = this.entityManager.createQuery("SELECT p FROM DronePilot p", DronePilot.class).getResultList();
 
         assertThat(list.size()).isEqualTo(1);
     }
@@ -61,5 +63,34 @@ public class DronePilotServiceTests {
         List<DronePilot> allPilots = this.service.getAllDronePilots();
 
         assertThat(allPilots.size()).isEqualTo(2);
+    }
+
+    @Test()
+    @DisplayName("it should delete 1 pilot from the database")
+    public void testDeletePilot() {
+        DronePilot pilotToDelete = new DronePilot();
+        pilotToDelete.setFirstname("Max");
+        pilotToDelete.setLastname("Mustermann");
+        pilotToDelete.setAboutMe("I dont want to be deleted :(");
+
+        DronePilot pilotToDelete2 = new DronePilot();
+        pilotToDelete2.setFirstname("Manuela");
+        pilotToDelete2.setLastname("Musterfrau");
+        pilotToDelete2.setAboutMe("I am a good drone pilot!");
+
+        this.entityManager.persist(pilotToDelete);
+        this.entityManager.persist(pilotToDelete2);
+
+        List<DronePilot> allPilotsBefore = this.entityManager.createQuery("FROM DronePilot", DronePilot.class).getResultList();
+        int sizeBefore = allPilotsBefore.size();
+
+        allPilotsBefore.forEach(p -> log.info(p.toString()));
+        log.info("Deleted Pilot: {}", this.service.deleteDronePilotById(pilotToDelete.getId()));
+
+
+        List<DronePilot> allPilotsAfter = this.entityManager.createQuery("FROM DronePilot", DronePilot.class).getResultList();
+        int sizeAfter = allPilotsAfter.size();
+
+        assertThat(sizeAfter).isEqualTo(sizeBefore - 1);
     }
 }

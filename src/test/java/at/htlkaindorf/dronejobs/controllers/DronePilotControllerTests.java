@@ -24,7 +24,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
 @SpringBootTest
 @AutoConfigureMockMvc
 public class DronePilotControllerTests {
@@ -54,6 +53,7 @@ public class DronePilotControllerTests {
 
         Mockito.when(dronePilotService.getAllDronePilots()).thenReturn(mockDronePilots);
 
+        // viele testdaten -> viele verschiedene tests
         this.mockMvc.perform(MockMvcRequestBuilders.get("/api/dronepilot/all"))
                 .andExpect(status().isOk())
                 .andDo(print())

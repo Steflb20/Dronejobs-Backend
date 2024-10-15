@@ -2,12 +2,14 @@ package at.htlkaindorf.dronejobs.services;
 
 import at.htlkaindorf.dronejobs.entities.DronePilot;
 import at.htlkaindorf.dronejobs.repositories.DronePilotRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class DronePilotService {
     private DronePilotRepository dronePilotRepository;
@@ -37,12 +39,22 @@ public class DronePilotService {
     }
 
     /**
+     * Delete drone pilot by id from the database
+     * @param id Id of dronePilot to delete
+     * @return deleted drone pilot, if successful
+     */
+    public DronePilot deleteDronePilotById(int id) {
+        DronePilot toDelete = this.dronePilotRepository.getDronePilotById(id);
+        this.dronePilotRepository.delete(toDelete);
+        return toDelete;
+    }
+    /**
      * Method to return a DronePilot by id
      * @param id
      * @return
      */
     public DronePilot findDronePilotById(int id) {
-        return this.dronePilotRepository.findById(id);
+        return this.dronePilotRepository.getDronePilotById(id);
     }
 
 }
