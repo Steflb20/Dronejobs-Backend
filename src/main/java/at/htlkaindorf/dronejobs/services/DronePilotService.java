@@ -43,8 +43,14 @@ public class DronePilotService {
      * @return deleted drone pilot, if successful
      */
     public DronePilot deleteDronePilotById(int id) {
-        DronePilot toDelete = this.dronePilotRepository.getDronePilotById(id);
-        this.dronePilotRepository.delete(toDelete);
+        DronePilot toDelete = new DronePilot();
+        try {
+            toDelete = this.dronePilotRepository.getDronePilotById(id);
+            this.dronePilotRepository.delete(toDelete);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+
         return toDelete;
     }
 }
