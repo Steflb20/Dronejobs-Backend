@@ -1,5 +1,6 @@
 package at.htlkaindorf.dronejobs.controllers;
 
+import static org.mockito.Mockito.anyInt;
 import static org.mockito.Mockito.when;
 
 import at.htlkaindorf.dronejobs.entities.DronePilot;
@@ -67,6 +68,30 @@ class DronePilotControllerDiffblueTest {
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/dronepilot/save")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content);
+
+        // Act and Assert
+        MockMvcBuilders.standaloneSetup(dronePilotController)
+                .build()
+                .perform(requestBuilder)
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().contentType("application/json"))
+                .andExpect(MockMvcResultMatchers.content()
+                        .string("{\"id\":1,\"firstname\":\"Jane\",\"lastname\":\"Doe\",\"aboutMe\":\"About Me\"}"));
+    }
+
+    /**
+     * Method under test: {@link DronePilotController#deleteDronePilotById(int)}
+     */
+    @Test
+    void testDeleteDronePilotById() throws Exception {
+        // Arrange
+        DronePilot dronePilot = new DronePilot();
+        dronePilot.setAboutMe("About Me");
+        dronePilot.setFirstname("Jane");
+        dronePilot.setId(1);
+        dronePilot.setLastname("Doe");
+        when(dronePilotService.deleteDronePilotById(anyInt())).thenReturn(dronePilot);
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders.delete("/api/dronepilot/deleteById/{id}", 1);
 
         // Act and Assert
         MockMvcBuilders.standaloneSetup(dronePilotController)
