@@ -85,9 +85,8 @@ public class DronePilotServiceTests {
         int sizeBefore = allPilotsBefore.size();
 
         allPilotsBefore.forEach(p -> log.info(p.toString()));
+        log.info("Deleted Pilot: {}", this.service.deleteDronePilotById(pilotToDelete.getId()));
 
-        // change to use service 
-        this.entityManager.remove(pilotToDelete);
 
         List<DronePilot> allPilotsAfter = this.entityManager.createQuery("FROM DronePilot", DronePilot.class).getResultList();
         int sizeAfter = allPilotsAfter.size();
