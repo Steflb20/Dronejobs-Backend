@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/contract")
 public class ContractController {
 
-    private ContractService contractService;
-    private DronePilotService dronePilotService;
+    private final ContractService contractService;
+    private final DronePilotService dronePilotService;
 
     @Autowired
     public ContractController(ContractService contractService, DronePilotService dronePilotService) {
