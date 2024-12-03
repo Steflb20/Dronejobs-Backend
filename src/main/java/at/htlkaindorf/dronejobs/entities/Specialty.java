@@ -1,5 +1,6 @@
 package at.htlkaindorf.dronejobs.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
@@ -21,5 +22,6 @@ public class Specialty {
             joinColumns = {@JoinColumn(name = "specialties_id")},
             inverseJoinColumns = {@JoinColumn(name = "drone_pilot_id")})
     @ToString.Exclude
+    @JsonIgnore
     private List<DronePilot> dronePilots;
 }
