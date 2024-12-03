@@ -1,5 +1,6 @@
 package at.htlkaindorf.dronejobs.controllers;
 
+import at.htlkaindorf.dronejobs.dto.DronePilotDto;
 import at.htlkaindorf.dronejobs.entities.DronePilot;
 import at.htlkaindorf.dronejobs.services.DronePilotService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ public class DronePilotController {
 
     @PostMapping("save")
     public DronePilot saveDronePilot(
-            @RequestBody() DronePilot dronePilot
+            @RequestBody() DronePilotDto dronePilot
     ) {
         return this.dronePilotService.saveDronePilot(dronePilot);
     }
