@@ -1,8 +1,6 @@
 package at.htlkaindorf.dronejobs.controllers;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.anyInt;
@@ -102,7 +100,7 @@ class ContractControllerDiffblueTest {
         verify(dronePilotRepository, atLeast(1)).getDronePilotById(eq(1));
         verify(contractService).saveContract(isA(Contract.class));
         HttpStatusCode statusCode = actualCreateContractResult.getStatusCode();
-        assertTrue(statusCode instanceof HttpStatus);
+        assertInstanceOf(HttpStatus.class, statusCode);
         assertEquals(201, actualCreateContractResult.getStatusCodeValue());
         assertEquals(HttpStatus.CREATED, statusCode);
         assertTrue(actualCreateContractResult.hasBody());
@@ -119,22 +117,6 @@ class ContractControllerDiffblueTest {
     @DisplayName("Test createContract(ContractDTO)")
     @Disabled("TODO: Complete this test")
     void testCreateContract2() throws Exception {
-        // TODO: Diffblue Cover was only able to create a partial test for this method:
-        //   Reason: No inputs found that don't throw a trivial exception.
-        //   Diffblue Cover tried to run the arrange/act section, but the method under
-        //   test threw
-        //   com.fasterxml.jackson.databind.exc.InvalidDefinitionException: Java 8 date/time type `java.time.LocalDateTime` not supported by default: add Module "com.fasterxml.jackson.datatype:jackson-datatype-jsr310" to enable handling (through reference chain: at.htlkaindorf.dronejobs.entities.ContractDTO["fromDate"])
-        //       at com.fasterxml.jackson.databind.exc.InvalidDefinitionException.from(InvalidDefinitionException.java:77)
-        //       at com.fasterxml.jackson.databind.SerializerProvider.reportBadDefinition(SerializerProvider.java:1330)
-        //       at com.fasterxml.jackson.databind.ser.impl.UnsupportedTypeSerializer.serialize(UnsupportedTypeSerializer.java:35)
-        //       at com.fasterxml.jackson.databind.ser.BeanPropertyWriter.serializeAsField(BeanPropertyWriter.java:732)
-        //       at com.fasterxml.jackson.databind.ser.std.BeanSerializerBase.serializeFields(BeanSerializerBase.java:770)
-        //       at com.fasterxml.jackson.databind.ser.BeanSerializer.serialize(BeanSerializer.java:183)
-        //       at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider._serialize(DefaultSerializerProvider.java:502)
-        //       at com.fasterxml.jackson.databind.ser.DefaultSerializerProvider.serializeValue(DefaultSerializerProvider.java:341)
-        //       at com.fasterxml.jackson.databind.ObjectMapper._writeValueAndClose(ObjectMapper.java:4799)
-        //       at com.fasterxml.jackson.databind.ObjectMapper.writeValueAsString(ObjectMapper.java:4040)
-        //   See https://diff.blue/R013 to resolve this issue.
 
         // Arrange
         ContractDTO contractDTO = new ContractDTO();
