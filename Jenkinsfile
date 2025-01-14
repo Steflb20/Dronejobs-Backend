@@ -23,6 +23,8 @@ pipeline {
         stage('run') {
             steps {
                 sh 'mv target/dronejobs-0.0.1-SNAPSHOT.jar ~/backend/dronejobs.jar'
+                sh 'supervisorctl stop dronejobs'
+                sh 'supervisorctl start dronejobs'
             }
         }
 
