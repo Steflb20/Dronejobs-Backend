@@ -2,10 +2,10 @@ pipeline {
     agent any
 
     environment {
-        DB_HOST = 'ci-postgres'
+        DB_HOST = 'localhost'
         DB_PORT = '5432'
-        DB_NAME = 'dronejobs'
-        DB_USER = 'postgres'
+        DB_NAME = 'ci-database'
+        DB_USER = 'ciuser'
         DB_PASSWORD = 'postgres'
     }
 
@@ -30,34 +30,12 @@ pipeline {
                 sh 'mvn package'
             }
         }
-        stage('Build Docker Image') {
+        stage('run') {
             steps {
-                script {
-                    sh 'docker build -t my-app-image -f .docker/Dockerfile .'
-                }
+                sh 'echo hey!'
             }
         }
-        stage('Run Docker Container') {
-            steps {
-                script {
-                    // Stop and remove any existing container named "my-app-container"
-                    sh """
-                        docker stop my-app-container || true
-                        docker rm my-app-container || true
-                    """
-                    // Run the Docker container with the jenkins_network and environment variables
-                    sh """
-                        docker run -d --name my-app-container --network jenkins_pipeline_syp_jenkins -p 5000:5000 \
-                        -e DB_HOST=ci-postgres \
-                        -e DB_PORT=5432 \
-                        -e DB_NAME=dronejobs \
-                        -e DB_USER=postgres \
-                        -e DB_PASSWORD=postgres \
-                        my-app-image
-                    """
-                }
-            }
-        }
+
     }
 
     post {
