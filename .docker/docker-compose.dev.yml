@@ -1,5 +1,5 @@
 services:
-  postgres_db:
+  dronejobs_db:
     image: postgres
     restart: always
     shm_size: 128mb
