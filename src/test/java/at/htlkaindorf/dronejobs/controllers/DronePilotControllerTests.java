@@ -1,5 +1,6 @@
 package at.htlkaindorf.dronejobs.controllers;
 
+import at.htlkaindorf.dronejobs.dto.DronePilotDto;
 import at.htlkaindorf.dronejobs.entities.DronePilot;
 import at.htlkaindorf.dronejobs.services.DronePilotService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -75,7 +76,7 @@ public class DronePilotControllerTests {
 
         pilot.setId(1);
 
-        Mockito.when(this.dronePilotService.saveDronePilot(Mockito.any(DronePilot.class))).thenReturn(pilot);
+        Mockito.when(this.dronePilotService.saveDronePilot(Mockito.any(DronePilotDto.class))).thenReturn(pilot);
 
         this.mockMvc.perform(
                 MockMvcRequestBuilders.post("/api/dronepilot/save")
@@ -89,5 +90,4 @@ public class DronePilotControllerTests {
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.aboutMe").value("Heyy ;)"));
     }
-
 }

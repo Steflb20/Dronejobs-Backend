@@ -1,5 +1,6 @@
 package at.htlkaindorf.dronejobs.services;
 
+import at.htlkaindorf.dronejobs.dto.DronePilotDto;
 import at.htlkaindorf.dronejobs.entities.DronePilot;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
@@ -32,7 +33,7 @@ public class DronePilotServiceTests {
     @Test()
     @DisplayName("it should store the values in the database properly")
     public void testDatabaseSave() {
-        DronePilot dronePilot = new DronePilot();
+        DronePilotDto dronePilot = new DronePilotDto();
         dronePilot.setFirstname("Max");
         dronePilot.setLastname("Mustermann");
         dronePilot.setAboutMe("I like drones :)");
