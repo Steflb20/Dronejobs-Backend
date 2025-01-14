@@ -20,19 +20,9 @@ pipeline {
                 sh 'mvn clean install'
             }
         }
-        stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-        }
-        stage('Package') {
-            steps {
-                sh 'mvn package'
-            }
-        }
         stage('run') {
             steps {
-                sh 'echo hey!'
+                sh 'java -jar target/dronejobs-0.0.1-SNAPSHOT.jar'
             }
         }
 
