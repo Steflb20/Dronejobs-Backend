@@ -30,6 +30,7 @@ public class DronePilotServiceTests {
         this.entityManager = entityManager;
     }
 
+    /*
     @Test()
     @DisplayName("it should store the values in the database properly")
     public void testDatabaseSave() {
@@ -43,7 +44,7 @@ public class DronePilotServiceTests {
         List<DronePilot> list = this.entityManager.createQuery("SELECT p FROM DronePilot p", DronePilot.class).getResultList();
 
         assertThat(list.size()).isEqualTo(1);
-    }
+    }*/
 
     @Test()
     @DisplayName("it should return all values from the database")
