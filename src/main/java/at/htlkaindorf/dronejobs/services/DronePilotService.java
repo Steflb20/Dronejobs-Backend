@@ -9,10 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -41,6 +38,7 @@ public class DronePilotService {
         dronePilot.setFirstname(pilot.getFirstname());
         dronePilot.setLocation(pilot.getLocation());
         dronePilot.setAboutMe(pilot.getAboutMe());
+        dronePilot.setStars(pilot.getStars());
 
         Set<Specialty> specialties = new HashSet<>();
 
@@ -85,6 +83,30 @@ public class DronePilotService {
      */
     public DronePilot findDronePilotById(int id) {
         return this.dronePilotRepository.getDronePilotById(id);
+    }
+
+    /**
+     * Method to get the DronePilots by an amount of minimum stars and a specific specialty
+     * @param specialty special category a pilot chooses
+     * @param minimumStars review stars
+     * @return the drone pilots with the given minimum stars and the specialty provided
+     */
+    public List<DronePilot> getFilteredDronePilots(String specialty, double minimumStars) {
+
+        List<DronePilot> dronePilots = this.dronePilotRepository.findAll();
+        List<DronePilot> filteredDronePilots = new ArrayList<>();
+
+        dronePilots = dronePilots.stream().filter(d -> d.getStars() >= minimumStars).toList();
+
+        dronePilots.forEach(d -> {
+            d.getSpecialties().forEach(s -> {
+                if (s.getName().equals(specialty)) {
+                    filteredDronePilots.add(d);
+                }
+            });
+        });
+
+        return filteredDronePilots;
     }
 
 }

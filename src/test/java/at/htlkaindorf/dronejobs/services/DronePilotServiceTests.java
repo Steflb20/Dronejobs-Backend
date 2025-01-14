@@ -2,6 +2,7 @@ package at.htlkaindorf.dronejobs.services;
 
 import at.htlkaindorf.dronejobs.dto.DronePilotDto;
 import at.htlkaindorf.dronejobs.entities.DronePilot;
+import at.htlkaindorf.dronejobs.entities.Specialty;
 import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @Slf4j
 @SpringBootTest
@@ -94,4 +100,49 @@ public class DronePilotServiceTests {
 
         assertThat(sizeAfter).isEqualTo(sizeBefore - 1);
     }
+
+    @Test
+    @DisplayName("it should filter DronePilots by minimum stars and specialty")
+    public void testGetFilteredDronePilots() {
+        DronePilot pilot1 = new DronePilot();
+        pilot1.setFirstname("Max");
+        pilot1.setLastname("Mustermann");
+        pilot1.setStars(4.5);
+        Specialty specialty1 = new Specialty();
+        specialty1.setName("Photography");
+        pilot1.setSpecialties(Set.of(specialty1));
+
+        DronePilot pilot2 = new DronePilot();
+        pilot2.setFirstname("Manuela");
+        pilot2.setLastname("Musterfrau");
+        pilot2.setStars(3.0);
+        Specialty specialty2 = new Specialty();
+        specialty2.setName("Surveying");
+        pilot2.setSpecialties(Set.of(specialty2));
+
+        DronePilot pilot3 = new DronePilot();
+        pilot3.setFirstname("John");
+        pilot3.setLastname("Doe");
+        pilot3.setStars(5.0);
+        pilot3.setSpecialties(Set.of(specialty1));
+
+        this.entityManager.persist(pilot1);
+        this.entityManager.persist(pilot2);
+        this.entityManager.persist(pilot3);
+
+        List<DronePilot> allPilotsBefore = this.entityManager.createQuery("FROM DronePilot", DronePilot.class).getResultList();
+        log.info("All Pilots Before Filtering:");
+        allPilotsBefore.forEach(p -> log.info(p.toString()));
+
+        List<DronePilot> filteredPilots = this.service.getFilteredDronePilots("Photography", 4.0);
+
+        log.info("Filtered Pilots:");
+        filteredPilots.forEach(p -> log.info(p.toString()));
+
+        assertEquals(2, filteredPilots.size());
+        //assertThat(filteredPilots).extracting(DronePilot::getFirstname).containsExactlyInAnyOrder("Max", "John");
+        List<String> firstNames = filteredPilots.stream().map(DronePilot::getFirstname).collect(Collectors.toList());
+        assertTrue(firstNames.containsAll(List.of("Max", "John")));
+    }
+
 }

@@ -3,8 +3,6 @@ package at.htlkaindorf.dronejobs.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -18,6 +16,7 @@ public class DronePilot {
     private String lastname;
     private String aboutMe;
     private String location;
+    private double stars;
 
     @ManyToMany
     @JoinTable(name = "drone_pilot_specialties",

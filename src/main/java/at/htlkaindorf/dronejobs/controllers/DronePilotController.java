@@ -42,4 +42,9 @@ public class DronePilotController {
     public DronePilot deleteDronePilotById(@PathVariable int id) {
         return this.dronePilotService.deleteDronePilotById(id);
     }
+
+    @GetMapping("getFilteredDronePilots")
+    public List<DronePilot> getFilteredDronePilots(@RequestParam String specialty, @RequestParam double minimumStars) {
+        return this.dronePilotService.getFilteredDronePilots(specialty, minimumStars);
+    }
 }
