@@ -22,7 +22,7 @@ pipeline {
         }
         stage('run') {
             steps {
-                sh 'java -jar target/dronejobs-0.0.1-SNAPSHOT.jar'
+                sh 'mv target/dronejobs-0.0.1-SNAPSHOT.jar ~/backend/dronejobs.jar'
             }
         }
 
