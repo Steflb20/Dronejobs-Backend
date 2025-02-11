@@ -5,6 +5,8 @@ import at.htlkaindorf.dronejobs.entities.DronePilot;
 import at.htlkaindorf.dronejobs.entities.Specialty;
 import at.htlkaindorf.dronejobs.repositories.DronePilotRepository;
 import at.htlkaindorf.dronejobs.repositories.SpecialtyRepository;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -107,6 +109,35 @@ public class DronePilotService {
         });
 
         return filteredDronePilots;
+    }
+
+    /*public void updateDronePilot(int id, DronePilotDto dto) {
+        DronePilot dronePilot = this.dronePilotRepository.getDronePilotById(id);
+        dronePilot.setLastname(dto.getLastname());
+        dronePilot.setFirstname(dto.getFirstname());
+        dronePilot.setLocation(dto.getLocation());
+        dronePilot.setAboutMe(dto.getAboutMe());
+        dronePilot.setStars(dto.getStars());
+
+        Set<Specialty> specialties = new HashSet<>();
+
+        for (int i = 0; i < dto.getSpecialties().length; i++) {
+            specialties.add(specialtyRepository.getSpecialtyByName(dto.getSpecialties()[i]));
+        }
+        dronePilot.setSpecialties(specialties);
+        this.dronePilotRepository.save(dronePilot);
+    }*/
+
+    @Transactional
+    public DronePilot updateDronePilot(int id, DronePilotDto dronePilotDto) {
+        return dronePilotRepository.findById(id).map(pilot -> {
+            pilot.setFirstname(dronePilotDto.getFirstname());
+            pilot.setLastname(dronePilotDto.getLastname());
+            pilot.setAboutMe(dronePilotDto.getAboutMe());
+            pilot.setLocation(dronePilotDto.getLocation());
+            pilot.setStars(dronePilotDto.getStars());
+            return dronePilotRepository.save(pilot);
+        }).orElseThrow(() -> new EntityNotFoundException("DronePilot mit ID " + id + " nicht gefunden"));
     }
 
 }

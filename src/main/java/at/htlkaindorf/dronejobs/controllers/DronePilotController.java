@@ -1,6 +1,7 @@
 package at.htlkaindorf.dronejobs.controllers;
 
 import at.htlkaindorf.dronejobs.dto.DronePilotDto;
+import at.htlkaindorf.dronejobs.dto.UpdateDronePilotDto;
 import at.htlkaindorf.dronejobs.entities.DronePilot;
 import at.htlkaindorf.dronejobs.services.DronePilotService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,5 +47,10 @@ public class DronePilotController {
     @GetMapping("getFilteredDronePilots")
     public List<DronePilot> getFilteredDronePilots(@RequestParam String specialty, @RequestParam double minimumStars) {
         return this.dronePilotService.getFilteredDronePilots(specialty, minimumStars);
+    }
+
+    @PutMapping("updateDronePilot")
+    public DronePilot updateDronePilot(@RequestBody UpdateDronePilotDto updateDronePilotDto) {
+        return this.dronePilotService.updateDronePilot(updateDronePilotDto.getId(), updateDronePilotDto.getDronePilotDto());
     }
 }

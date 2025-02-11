@@ -145,4 +145,53 @@ public class DronePilotServiceTests {
         assertTrue(firstNames.containsAll(List.of("Max", "John")));
     }
 
+    @Test
+    @DisplayName("it should retrieve a DronePilot by ID")
+    public void testGetDronePilotById() {
+        DronePilot pilot = new DronePilot();
+        pilot.setFirstname("Alice");
+        pilot.setLastname("Wonderland");
+        pilot.setAboutMe("Explorer of the skies");
+
+        this.entityManager.persist(pilot);
+        int id = pilot.getId();
+
+        DronePilot foundPilot = this.service.findDronePilotById(id);
+
+        assertThat(foundPilot).isNotNull();
+        assertThat(foundPilot.getFirstname()).isEqualTo("Alice");
+    }
+
+    @Test
+    @DisplayName("it should update a DronePilot's information")
+    public void testUpdateDronePilot() {
+        DronePilot pilot = new DronePilot();
+        pilot.setFirstname("Bob");
+        pilot.setLastname("Builder");
+        pilot.setAboutMe("I build drone routes");
+
+        this.entityManager.persist(pilot);
+        int id = pilot.getId();
+
+        DronePilotDto updateDto = new DronePilotDto();
+        updateDto.setFirstname("Bobby");
+        updateDto.setLastname("Fixer");
+        updateDto.setAboutMe("I fix drone routes");
+
+        this.service.updateDronePilot(id, updateDto);
+
+        DronePilot updatedPilot = this.entityManager.find(DronePilot.class, id);
+
+        assertThat(updatedPilot.getFirstname()).isEqualTo("Bobby");
+        assertThat(updatedPilot.getLastname()).isEqualTo("Fixer");
+        assertThat(updatedPilot.getAboutMe()).isEqualTo("I fix drone routes");
+    }
+
+    @Test
+    @DisplayName("it should return null when deleting a non-existent DronePilot")
+    public void testDeleteNonExistentPilot() {
+        int fakeId = 999;
+        DronePilot dronePilote = this.service.deleteDronePilotById(fakeId);
+        assertThat(dronePilote).isNull();
+    }
 }
