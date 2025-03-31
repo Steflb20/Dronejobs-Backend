@@ -14,10 +14,10 @@ public class DronePilot {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private String firstname;
-    private String lastname;
+    private String name;
     private String aboutMe;
     private String location;
+    private Double rating;
 
     @ManyToMany
     @JoinTable(name = "drone_pilot_specialties",

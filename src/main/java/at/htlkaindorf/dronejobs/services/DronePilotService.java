@@ -37,10 +37,10 @@ public class DronePilotService {
 
         DronePilot dronePilot = new DronePilot();
 
-        dronePilot.setLastname(pilot.getLastname());
-        dronePilot.setFirstname(pilot.getFirstname());
+        dronePilot.setName(pilot.getName());
         dronePilot.setLocation(pilot.getLocation());
         dronePilot.setAboutMe(pilot.getAboutMe());
+        dronePilot.setRating(pilot.getRating());
 
         Set<Specialty> specialties = new HashSet<>();
 

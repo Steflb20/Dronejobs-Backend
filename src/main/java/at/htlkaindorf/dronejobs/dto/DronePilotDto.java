@@ -9,9 +9,9 @@ import java.util.List;
 public class DronePilotDto {
 
     private String aboutMe;
-    private String firstname;
-    private String lastname;
+    private String name;
     private String location;
+    private Double rating;
 
     private String[] specialties;
 }

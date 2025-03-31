@@ -46,8 +46,7 @@ public class DronePilotControllerTests {
     public void testAllRoute() throws Exception {
         List<DronePilot> mockDronePilots = new ArrayList<>();
         DronePilot firstPilot = new DronePilot();
-        firstPilot.setFirstname("Max");
-        firstPilot.setLastname("Mustermann");
+        firstPilot.setName("Max Mustermann");
         firstPilot.setAboutMe("I love drones :)");
 
         mockDronePilots.add(firstPilot);
@@ -68,8 +67,7 @@ public class DronePilotControllerTests {
     @DisplayName("should save the dronepilot using the /save route")
     public void testSaveRoute() throws Exception {
         DronePilot pilot = new DronePilot();
-        pilot.setFirstname("Max");
-        pilot.setLastname("Mustermann");
+        pilot.setName("Max Mustermann");
         pilot.setAboutMe("Heyy ;)");
 
         String json = new ObjectMapper().writeValueAsString(pilot);

@@ -50,13 +50,11 @@ public class DronePilotServiceTests {
     @DisplayName("it should return all values from the database")
     public void testSelectAll() {
         DronePilot firstDronePilot = new DronePilot();
-        firstDronePilot.setFirstname("Max");
-        firstDronePilot.setLastname("Mustermann");
+        firstDronePilot.setName("Max Mustermann");
         firstDronePilot.setAboutMe("I like drones :)");
 
         DronePilot secondDronePilot = new DronePilot();
-        secondDronePilot.setFirstname("Manuela");
-        secondDronePilot.setLastname("Musterfrau");
+        secondDronePilot.setName("Manuela Musterfrau");
         secondDronePilot.setAboutMe("I love drones hehe");
 
         this.entityManager.persist(firstDronePilot);
@@ -71,13 +69,11 @@ public class DronePilotServiceTests {
     @DisplayName("it should delete 1 pilot from the database")
     public void testDeletePilot() {
         DronePilot pilotToDelete = new DronePilot();
-        pilotToDelete.setFirstname("Max");
-        pilotToDelete.setLastname("Mustermann");
+        pilotToDelete.setName("Max Mustermann");
         pilotToDelete.setAboutMe("I dont want to be deleted :(");
 
         DronePilot pilotToDelete2 = new DronePilot();
-        pilotToDelete2.setFirstname("Manuela");
-        pilotToDelete2.setLastname("Musterfrau");
+        pilotToDelete2.setName("Manuela Musterfrau");
         pilotToDelete2.setAboutMe("I am a good drone pilot!");
 
         this.entityManager.persist(pilotToDelete);

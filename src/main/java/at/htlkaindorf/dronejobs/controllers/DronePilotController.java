@@ -21,11 +21,13 @@ public class DronePilotController {
         this.dronePilotService = dronePilotService;
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("all")
     public List<DronePilot> getAllDronePilots() {
         return this.dronePilotService.getAllDronePilots();
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("save")
     public DronePilot saveDronePilot(
             @RequestBody() DronePilotDto dronePilot
@@ -38,6 +40,7 @@ public class DronePilotController {
         return this.dronePilotService.findDronePilotById(id);
     }
 
+    @CrossOrigin(origins = "http://localhost:3000")
     @DeleteMapping("deleteById/{id}")
     public DronePilot deleteDronePilotById(@PathVariable int id) {
         return this.dronePilotService.deleteDronePilotById(id);
