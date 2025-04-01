@@ -45,7 +45,15 @@ public class DronePilotService {
         Set<Specialty> specialties = new HashSet<>();
 
         for (int i = 0; i < pilot.getSpecialties().length; i++) {
-            specialties.add(specialtyRepository.getSpecialtyByName(pilot.getSpecialties()[i]));
+            Specialty specialty = specialtyRepository.getSpecialtyByName(pilot.getSpecialties()[i]);
+            if (specialty != null) {
+                specialties.add(specialty);
+            } else {
+                specialty = new Specialty();
+                specialty.setName(pilot.getSpecialties()[i]);
+                specialtyRepository.save(specialty);
+                specialties.add(specialty);
+            }
         }
 
         dronePilot.setSpecialties(specialties);
