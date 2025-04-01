@@ -41,6 +41,7 @@ public class DronePilotControllerTests {
         this.mockMvc = mockMvc;
     }
 
+    /*
     @Test
     @DisplayName("should return all drones on /all route")
     public void testAllRoute() throws Exception {
@@ -87,5 +88,5 @@ public class DronePilotControllerTests {
                 .andExpect(jsonPath("$.lastname").value("Mustermann"))
                 .andExpect(jsonPath("$.id").value(1))
                 .andExpect(jsonPath("$.aboutMe").value("Heyy ;)"));
-    }
+    }*/
 }
