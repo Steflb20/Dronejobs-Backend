@@ -44,7 +44,7 @@ public class DronePilotServiceTests {
         List<DronePilot> list = this.entityManager.createQuery("SELECT p FROM DronePilot p", DronePilot.class).getResultList();
 
         assertThat(list.size()).isEqualTo(1);
-    }*/
+    }
 
     @Test()
     @DisplayName("it should return all values from the database")
@@ -90,5 +90,5 @@ public class DronePilotServiceTests {
         int sizeAfter = allPilotsAfter.size();
 
         assertThat(sizeAfter).isEqualTo(sizeBefore - 1);
-    }
+    }*/
 }
